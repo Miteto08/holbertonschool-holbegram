@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "570045315768",
+    "project_id": "holbegram-certy",
+    "storage_bucket": "holbegram-certy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570045315768:android:7e0dc204b49fe8387a924d",
+        "android_client_info": {
+          "package_name": "com.holberton.holbegram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfg9-nRtQPT8NXU0atfJcF-A1nnsuI4so"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
