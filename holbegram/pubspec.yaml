@@ -41,4 +41,11 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter:
-  uses-material-design: true 
+  uses-material-design: true
+  assets:
+    - assets/images/
+  fonts:
+    - family: Billabong
+      fonts:
+        - asset: assets/fonts/Billabong.ttf
+        - asset: assets/fonts/InstagramSans.ttf
