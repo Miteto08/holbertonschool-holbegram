@@ -1,37 +1,60 @@
 import 'package:flutter/material.dart';
 import '../widgets/text_field.dart';
+import '../methods/auth_methods.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final bool _passwordVisible;
-
-  const LoginScreen({
-    Key? key,
-    required this.emailController,
-    required this.passwordController,
-    bool passwordVisible = true,
-  })  : _passwordVisible = passwordVisible,
-        super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late bool _passwordVisible;
-
-  @override
-  void initState() {
-    super.initState();
-    _passwordVisible = widget._passwordVisible;
-  }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool _passwordVisible = true;
+  final AuthMethode _authMethode = AuthMethode();
+  bool _isLoading = false;
 
   @override
   void dispose() {
-    widget.emailController.dispose();
-    widget.passwordController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
     super.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String result = await _authMethode.login(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (result == "success") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Login"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      // Naviguer vers l'écran d'accueil (à implémenter plus tard)
+      // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
@@ -55,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Image.asset(
-              'assets/logo.png',
+              'assets/images/image.png',
               width: 80,
               height: 60,
             ),
@@ -64,14 +87,14 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   TextFieldInput(
-                    controller: widget.emailController,
+                    controller: emailController,
                     isPassword: false,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 24),
                   TextFieldInput(
-                    controller: widget.passwordController,
+                    controller: passwordController,
                     isPassword: !_passwordVisible,
                     hintText: 'Password',
                     keyboardType: TextInputType.visiblePassword,
@@ -97,15 +120,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all(
+                        backgroundColor: MaterialStateProperty.all(
                           const Color.fromARGB(218, 226, 37, 24),
                         ),
                       ),
-                      onPressed: () {},
-                      child: const Text(
-                        'Log in',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      onPressed: _isLoading ? null : loginUser,
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'Log in',
+                              style: TextStyle(color: Colors.white),
+                            ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -122,15 +147,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
                   const Divider(thickness: 2),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account? "),
+                        const Text("Don't have an account? "),
                         TextButton(
-                          onPressed: null,
-                          child: Text(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SignUp(),
+                              ),
+                            );
+                          },
+                          child: const Text(
                             'Sign up',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
