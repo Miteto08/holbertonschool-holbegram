@@ -18,6 +18,9 @@ dependencies:
   firebase_database: ^10.4.5
   cloudinary_flutter: ^1.0.0
   
+  # HTTP for API requests
+  http: ^1.1.0
+  
   # UI Components
   cupertino_icons: ^1.0.2
   bottom_navy_bar: ^6.0.0

@@ -53,6 +53,9 @@ class AuthMethode {
         bio: '',
         followers: [],
         following: [],
+        posts: [],
+        saved: [],
+        searchKey: username.toLowerCase(),
       );
 
       await _firestore.collection("users").doc(user.uid).set(users.toJson());
