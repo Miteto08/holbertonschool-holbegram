@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
 import '../widgets/text_field.dart';
+<<<<<<< HEAD
 import '../methods/auth_methods.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+=======
+
+class LoginScreen extends StatefulWidget {
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final bool _passwordVisible;
+
+  const LoginScreen({
+    Key? key,
+    required this.emailController,
+    required this.passwordController,
+    bool passwordVisible = true,
+  })  : _passwordVisible = passwordVisible,
+        super(key: key);
+>>>>>>> 47bc055c42476e572a9cb81e27dfb64b62649f54
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+<<<<<<< HEAD
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _passwordVisible = true;
@@ -57,6 +74,23 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+=======
+  late bool _passwordVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = widget._passwordVisible;
+  }
+
+  @override
+  void dispose() {
+    widget.emailController.dispose();
+    widget.passwordController.dispose();
+    super.dispose();
+  }
+
+>>>>>>> 47bc055c42476e572a9cb81e27dfb64b62649f54
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +112,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             Image.asset(
+<<<<<<< HEAD
               'assets/images/image.png',
+=======
+              'assets/logo.png',
+>>>>>>> 47bc055c42476e572a9cb81e27dfb64b62649f54
               width: 80,
               height: 60,
             ),
@@ -87,14 +125,22 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   TextFieldInput(
+<<<<<<< HEAD
                     controller: emailController,
+=======
+                    controller: widget.emailController,
+>>>>>>> 47bc055c42476e572a9cb81e27dfb64b62649f54
                     isPassword: false,
                     hintText: 'Email',
                     keyboardType: TextInputType.emailAddress,
                   ),
                   const SizedBox(height: 24),
                   TextFieldInput(
+<<<<<<< HEAD
                     controller: passwordController,
+=======
+                    controller: widget.passwordController,
+>>>>>>> 47bc055c42476e572a9cb81e27dfb64b62649f54
                     isPassword: !_passwordVisible,
                     hintText: 'Password',
                     keyboardType: TextInputType.visiblePassword,
@@ -120,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ButtonStyle(
+<<<<<<< HEAD
                         backgroundColor: MaterialStateProperty.all(
                           const Color.fromARGB(218, 226, 37, 24),
                         ),
@@ -131,6 +178,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Log in',
                               style: TextStyle(color: Colors.white),
                             ),
+=======
+                        backgroundColor: WidgetStateProperty.all(
+                          const Color.fromARGB(218, 226, 37, 24),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        'Log in',
+                        style: TextStyle(color: Colors.white),
+                      ),
+>>>>>>> 47bc055c42476e572a9cb81e27dfb64b62649f54
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -147,6 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
                   const Divider(thickness: 2),
+<<<<<<< HEAD
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Row(
@@ -163,6 +222,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           child: const Text(
+=======
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Don't have an account? "),
+                        TextButton(
+                          onPressed: null,
+                          child: Text(
+>>>>>>> 47bc055c42476e572a9cb81e27dfb64b62649f54
                             'Sign up',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
