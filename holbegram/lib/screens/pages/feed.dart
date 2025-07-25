@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'methods/post_storage.dart';
 
 class Feed extends StatelessWidget {
   const Feed({Key? key}) : super(key: key);
@@ -75,8 +77,37 @@ class Posts extends StatelessWidget {
                             Text(data['username']),
                             const Spacer(),
                             IconButton(
+                              icon: Icon(
+                                data['isFavorite'] == true 
+                                    ? Icons.bookmark 
+                                    : Icons.bookmark_border,
+                                color: data['isFavorite'] == true ? Colors.black : Colors.grey,
+                              ),
+                              onPressed: () async {
+                                String postId = snapshot.data!.docs[index].id;
+                                bool isFavorite = data['isFavorite'] ?? false;
+                                
+                                await FirebaseFirestore.instance
+                                    .collection('posts')
+                                    .doc(postId)
+                                    .update({
+                                  'isFavorite': !isFavorite,
+                                });
+                                
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      isFavorite ? 'Removed from favorites' : 'Added to favorites'
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
                               icon: const Icon(Icons.more_horiz),
-                              onPressed: () {
+                              onPressed: () async {
+                                PostStorage postStorage = PostStorage();
+                                await postStorage.deletePost(snapshot.data!.docs[index].id, '');
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Post Deleted'),
